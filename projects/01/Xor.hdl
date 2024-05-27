@@ -1,0 +1,73 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Xor.hdl
+
+/*
+* Xor gate: if (a != b) then out = 1 else out = 0
+*
+* Now that we have Or gates we can perform Boolean Functions Synthesis
+*   from the truth table to get the final Boolean function to translate
+*   to the logic gates
+*
+* Could also use Karnaugh maps (K-maps) or minterms and maxterms
+*
+* Either way, you boil it down to the final answer using Boolean algebra rules
+*   commutativity, associativity, distributive, DeMorgan's, etc.
+*
+* Boolean Algebra Rules
+*
+* Basic Operations:
+*  - AND (Conjunction): A * B or AB
+*  - OR (Disjunction): A + B
+*  - NOT (Negation): !A or A'
+*
+* Fundamental Laws:
+*  - Identity: A + 0 = A, A * 1 = A
+*  - Null: A + 1 = 1, A * 0 = 0
+*  - Idempotent: A + A = A, A * A = A
+*  - Complement: A + !A = 1, A * !A = 0
+*  - Double Negation: !!A = A
+*
+* Commutative Laws:
+*  - A + B = B + A
+*  - A * B = B * A
+*
+* Associative Laws:
+*  - (A + B) + C = A + (B + C)
+*  - (A * B) * C = A * (B * C)
+*
+* Distributive Laws:
+*  - A * (B + C) = (A * B) + (A * C)
+*  - A + (B * C) = (A + B) * (A + C)
+*
+* Absorption Laws:
+*  - A + (A * B) = A
+*  - A * (A + B) = A
+*
+* De Morgan's Theorems:
+*  - !(A * B) = !A + !B
+*  - !(A + B) = !A * !B
+*
+* Consensus Theorem:
+*  - A * B + !A * C + B * C = A * B + !A * C
+*
+* Annihilation Law:
+*  - A * !A = 0
+*
+* Complementarity:
+*  - A + !A = 1
+*  - A * !A = 0
+*/
+
+CHIP Xor {
+    IN a, b;
+    OUT out;
+    PARTS:
+    Not(in=a, out=Nota);
+    Not(in=b, out=Notb);
+    And(a=a, b=Notb, out=aNotb);
+    And(a=b, b=Nota, out=bNota);
+    Or(a=aNotb, b=bNota, out=out);
+}
+
