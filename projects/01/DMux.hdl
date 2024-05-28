@@ -1,0 +1,35 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux.hdl
+
+/*
+* DMux gate: if sel == 0 then a = in and b = 0 else a = 0 and b = in 
+*
+* Solved using 2 separate 2-variable k-maps to form 2 separate circuits
+* for both outputs
+*
+* K-map for output a
+*   sel
+*      0 1
+* in 0 1 0
+*    1 0 0
+
+* K-map for output b
+*   sel
+*      0 1
+* in 0 0 1
+*    1 0 0
+*/
+
+CHIP DMux {
+    IN in, sel;
+    OUT a, b;
+    PARTS:
+    Not(in=sel, out=Notsel);
+    And(a=in, b=Notsel, out=a);
+    And(a=in, b=sel, out=b);
+}
+
+
+

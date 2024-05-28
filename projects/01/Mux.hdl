@@ -1,0 +1,27 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux.hdl
+
+/*
+* Mux gate: if sel == 0 then out = a else out = b
+*
+* Solved using 3-variable k-map
+*   b sel
+*     00 01 11 10
+* a 1 1  0  1  1
+*   0 0  0  1  0
+*/
+
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+    PARTS:
+    Not(in=sel, out=Notsel);
+    Or(a=b, b=Notsel, out=bOrNotsel);
+    And(a=a, b=bOrNotsel, out=aAndbOrNotsel);
+    And(a=sel, b=b, out=selAndb);
+    Or(a=aAndbOrNotsel, b=selAndb, out=out);
+}
+
+
