@@ -6,6 +6,7 @@
 /**
 * Or8Way gate: out = Or(in[0] .. in[7])
  */
+
 CHIP Or8Way {
     IN in[16];
     OUT out;

@@ -1,0 +1,26 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux4Way.hdl
+
+/*
+* DMux4Way gate
+*   if sel == 00 then out = a
+*   if sel == 01 then out = b
+*   if sel == 10 then out = c
+*   if sel == 11 then out = d
+*
+* Reverse bracket style, first a single DMux fans out to two other DMux gates
+*   which determine a, b, c, or d -- sel[0] determines the first fan out and
+*   sel[1] determines the second level of fan out
+*/
+
+CHIP DMux4Way {
+    IN in, sel[2];
+    OUT a, b, c, d;
+    PARTS:
+    DMux(in=in, sel=sel[0], a=Dmuxa, b=Dmuxb);
+    DMux(in=Dmuxa, sel=sel[1], a=a, b=c);
+    DMux(in=Dmuxb, sel=sel[1], a=b, b=d);
+}
+
