@@ -1,0 +1,35 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/DMux8Way.hdl
+
+/*
+* DMux4Way gate
+*   if sel == 000 then out = a
+*   if sel == 001 then out = e
+*   if sel == 010 then out = c
+*   if sel == 011 then out = g
+*   if sel == 100 then out = b
+*   if sel == 101 then out = f
+*   if sel == 110 then out = d
+*   if sel == 111 then out = h
+*
+* Reverse bracket style, first a single DMux fans out to two other DMux gates
+*   which determine a, c, b, or d which fans out to another layer of four DMux
+*   gates which determine a, e, c, g, b, f, d, or h -- sel[0] determines the
+*   first fan out, sel[1] determines the second level of fan out, and sel[2]
+*   determines the third level of fan out
+*/
+
+CHIP DMux8Way {
+    IN in, sel[3];
+    OUT a, b, c, d, e, f, g, h;
+    PARTS:
+    DMux(in=in, sel=sel[0], a=Dmuxa, b=Dmuxb);
+    DMux(in=Dmuxa, sel=sel[1], a=Dmux2a, b=Dmuxc);
+    DMux(in=Dmuxb, sel=sel[1], a=Dmux2b, b=Dmuxd);
+    DMux(in=Dmux2a, sel=sel[2], a=a, b=e);
+    DMux(in=Dmuxc, sel=sel[2], a=c, b=g);
+    DMux(in=Dmux2b, sel=sel[2], a=b, b=f);
+    DMux(in=Dmuxd, sel=sel[2], a=d, b=h);
+}
